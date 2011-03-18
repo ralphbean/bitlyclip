@@ -7,6 +7,19 @@ from ConfigParser import ConfigParser
 
 import bitlyapi
 
+pynotify = None
+try:
+    import pynotify
+except ImportError, e:
+    pass
+
+def notify(message, cls='dialog-message'):
+    print message
+    if not pynotify:
+        return False
+    notif = pynotify.Notification("bitlyclip", message, cls)
+    return notif.show()
+
 def parse_args():
     p = optparse.OptionParser()
     p.add_option('-f', '--config', default='~/.bitly')
@@ -19,8 +32,9 @@ def main(url):
     config.read(os.path.expanduser(opts.config))
 
     if not config.has_section('bitly'):
-        print >>sys.stderr, 'Failed to read bit.ly API configuration ' \
-                'from %s.' % opts.config
+        msg = 'Failed to read bit.ly API configuration ' \
+              'from %s.' % opts.config
+        notify("%s failed.\n%s" % (__file__, msg), 'dialog-warning')
         sys.exit(1)
 
     api = bitlyapi.BitLy(
@@ -28,17 +42,21 @@ def main(url):
             config.get('bitly', 'api_key'),
             )
 
-    res = api.shorten(longUrl=url)
-    return res['url']
+    return api.shorten(longUrl=url)['url']
 
 if __name__ == '__main__':
-    #Copy from the clipboard
-    import os
-    url = os.popen('xsel').read()
+    try:
+        #Copy from the clipboard
+        import os
+        url = os.popen('xsel').read()
 
-    #BitLy magic
-    url = main(url)
+        #BitLy magic
+        short_url = main(url)
 
-    #Paste to the clipboard
-    import os
-    os.popen('xsel', 'wb').write(url)
+        #Paste to the clipboard
+        import os
+        os.popen('xsel', 'wb').write(short_url)
+        notify('%s\n\n\tshortened to\n\n%s\n\n' % (url, short_url) +
+               '\t(and put in your clipboard)')
+    except Exception, e:
+        notify("%s failed.\n%s" % (__file__, str(e)), 'dialog-warning')
