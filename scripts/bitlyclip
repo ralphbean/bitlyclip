@@ -47,15 +47,13 @@ def main(url):
 if __name__ == '__main__':
     try:
         #Copy from the clipboard
-        import os
         url = os.popen('xsel').read()
 
         #BitLy magic
         short_url = main(url)
 
         #Paste to the clipboard
-        import os
-        os.popen('xsel', 'wb').write(short_url)
+        os.popen('xsel -i', 'wb').write(short_url)
         notify('%s\n\n\tshortened to\n\n%s\n\n' % (url, short_url) +
                '\t(and put in your clipboard)')
     except Exception, e:
