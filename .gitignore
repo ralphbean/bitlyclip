@@ -11,3 +11,4 @@ python-eggs
 virtualenv
 venv
 *.pyo
+*.egg-info
