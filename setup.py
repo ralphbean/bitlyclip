@@ -18,6 +18,7 @@ setup(name='bitlyclip',
       include_package_data=True,
       zip_safe=False,
       install_requires=[
+          'bitlyapi',
           # -*- Extra requirements: -*-
       ],
       entry_points="""
