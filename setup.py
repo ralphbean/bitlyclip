@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '0.1.4'
+version = '0.2.0'
 
 setup(name='bitlyclip',
       version=version,
@@ -20,7 +20,11 @@ setup(name='bitlyclip',
 
         - http://www.galago-project.org/downloads.php
 
-      To install:  ``pip install bitlyclip``
+      You'll need to have ``xsel`` on your system::
+
+        $ sudo yum -y install xsel
+
+      To install bitlyclip itself:  ``$ pip install bitlyclip``
 
       To use: ``$ bitlyclip``
       """,
@@ -33,23 +37,22 @@ setup(name='bitlyclip',
           'Programming Language :: Python :: 2.5',
           'Programming Language :: Python :: 2.6',
           'Programming Language :: Python :: 2.7',
-          'Topic :: Utilities',
           'Topic :: Internet :: WWW/HTTP',
           'Topic :: Text Processing :: General',
       ],
       keywords='',
       author='Ralph Bean',
-      author_email='ralph.bean@gmail.com',
+      author_email='rbean@redhat.com',
       url='http://github.com/ralphbean/bitlyclip',
       license='GPLv3+',
       packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
       include_package_data=True,
       zip_safe=False,
-      scripts=['scripts/bitlyclip',],
       install_requires=[
           'bitlyapi',
       ],
       entry_points="""
-      # -*- Entry points: -*-
+      [console_scripts]
+      bitlyclip = bitlyclip:cmd
       """,
      )

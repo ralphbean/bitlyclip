@@ -45,7 +45,7 @@ def main(url):
 
     return api.shorten(longUrl=url)['url']
 
-if __name__ == '__main__':
+def cmd():
     try:
         #Copy from the clipboard
         url = os.popen('xsel').read()
