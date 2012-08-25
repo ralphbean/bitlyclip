@@ -1,11 +1,11 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '0.2.0'
+version = '0.2.1'
 
 setup(name='bitlyclip',
       version=version,
-      description="bitly-fy a url in the linux clipboard",
+      description="bit.ly-fy a url in the X clipboard",
       long_description="""
       `bitlyclip` is just a script that:
 
